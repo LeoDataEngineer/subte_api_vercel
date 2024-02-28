@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  data_set:
+  extract_data_set:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -22,7 +22,38 @@ jobs:
         run:  |
           mkdir -p data
           python subte.py
-      
-      - name: Move subte.csv to data directory
-        run: |
-          mv subte.csv data/
+          
+      - name: Extrae data csv
+        uses: actions/upload-artifact@v4
+        with:
+          name: data_csv
+          path: subte.csv
+          
+  read_save_dataset:
+      runs-on: ubuntu-latest
+      needs: extract_data_set
+      steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-python@v5
+          with:
+            python-version: '3.10'
+            cache: 'pip' # caching pip dependencies
+        - run: pip install -r requirements1.txt
+        # Paso para descargar el artefacto
+        - name: Download artifact
+          uses: actions/download-artifact@v4
+          with:
+            name: data_csv
+            path: data_csv
+
+        # Paso para agregar y subir el archivo CSV al repositorio
+        - name: Add and commit CSV file
+          run: |-
+            git config user.name "Automated"
+            git config user.email "actions@users.noreply.github.com"
+            git add data_csv
+            git commit -m "Add data.csv"
+            timestamp=$(date -u)
+            git diff --quiet && git diff --cached --quiet || git commit -m "Latest data: ${timestamp}" && git push origin main
+           
+   
