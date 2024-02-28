@@ -1,0 +1,28 @@
+name: Extraer y enviar archivo a otro repo
+on:
+  workflow_dispatch:
+
+jobs:
+  data_set:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Crear directorio data_snow y Run Script
+        run:  |
+          mkdir -p data_snow
+          python ./scripts/extract_from_snowflake.py
+      
+      - name: Move data_snow.csv to data_snow directory
+        run: |
+          mv data_snow.csv data_snow/
