@@ -9,7 +9,7 @@ url = "https://raw.githubusercontent.com/LeoDataEngineer/etl_snowflake_actions/m
 df = pd.read_csv(url)
 
 # Escribir el DataFrame en un archivo CSV en la ruta especificada
-df.to_csv(ruta_csv/, index=False)
+df.to_csv("data/subte.csv, index=False)
 
 # Construir la ruta al archivo CSV dentro de la carpeta "data"
 
