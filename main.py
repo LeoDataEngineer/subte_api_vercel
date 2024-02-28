@@ -32,12 +32,6 @@ html = f"""
 </html>
 """
 
-# # Obtener la ruta al directorio actual del script
-# ruta_actual = os.path.dirname(os.path.abspath(__file__))
-
-# # Construir la ruta al archivo CSV dentro de la carpeta "data"
-# ruta_csv = os.path.join(ruta_actual, "data", "subte.csv")
-
 # Leer el archivo CSV utilizando pandas
 df = pd.read_csv('data/subte.csv')
 
@@ -73,7 +67,7 @@ def get_daley(line: str, direction: str, station: str):
     direccion_df = linea_df.loc[linea_df['DIRECTION_TO'] == direction]
     estacion_df = direccion_df.loc[direccion_df['STOP_NAME'] == station]
     
-    return estacion_df[['ARRIVAL_DELAY', 'DEPARTURE_DELAY']]
+    return estacion_df[['ARRIVAL_DELAY', 'DEPARTURE_DELAY','CREATED_AT']]
     
 print(get_daley('LineaA', 'Plaza de Mayo', 'San Pedrito'))           
 
