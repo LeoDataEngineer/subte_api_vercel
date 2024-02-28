@@ -18,11 +18,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements1.txt
 
-      - name: Crear directorio data_snow y Run Script
+      - name: Crear directorio data y Run Script
         run:  |
-          mkdir -p data_snow
+          mkdir -p data
           python subte.py
       
-      - name: Move data_snow.csv to data_snow directory
+      - name: Move subte.csv to data directory
         run: |
-          mv data_snow.csv data_snow/
+          mv subte.csv data/
