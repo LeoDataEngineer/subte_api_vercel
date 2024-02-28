@@ -33,7 +33,7 @@ html = f"""
 """
 
 # Leer el archivo CSV utilizando pandas
-df = pd.read_csv('data/subte.csv')
+df = pd.read_csv('data_csv/subte.csv')
 
 # Definición de la ruta principal "/"    
 @app.get("/")
